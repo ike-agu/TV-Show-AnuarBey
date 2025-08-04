@@ -9,7 +9,17 @@
   </head>
 
   <body>
+    <template id="episode-template">
+      <div class="episode-card">
+        <img class="episode-img" src="" alt="Episode image" />
+        <h2 class="episode-title"></h2>
+        <p class="episode-code"></p>
+        <div class="episode-summary"></div>
+      </div>
+    </template>
+
     <div id="root"></div>
+    <div id="episode-list"></div>
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
