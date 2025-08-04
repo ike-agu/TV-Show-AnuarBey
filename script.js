@@ -6,7 +6,12 @@ function setup() {
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
-  rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+  rootElem.innerHTML = "";
+
+  const header = document.createElement("div");
+  header.id = "episode-count";
+  header.textContent = `Got ${episodeList.length} episode(s)`;
+  rootElem.appendChild(header);
 }
 
 window.onload = setup;
