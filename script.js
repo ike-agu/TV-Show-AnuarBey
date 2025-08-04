@@ -21,13 +21,13 @@ function makePageForEpisodes(episodeList) {
 
   episodeList.forEach((episode) => {
     const episodeCard = template.content.cloneNode(true);
-    episodeCard.querySelector(".episode-img").src = episode.image.medium;
+
     episodeCard.querySelector(".episode-title").textContent = episode.name;
     episodeCard.querySelector(".episode-code").textContent = `S${String(
       episode.season
     ).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
     episodeCard.querySelector(".episode-summary").innerHTML = episode.summary;
-
+    episodeCard.querySelector(".episode-img").src = episode.image.medium;
     episodeListElem.appendChild(episodeCard);
   });
 }
