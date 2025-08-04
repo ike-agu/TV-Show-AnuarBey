@@ -11,15 +11,20 @@
   <body>
     <template id="episode-template">
       <div class="episode-card">
-        <img class="episode-img" src="" alt="Episode image" />
         <h2 class="episode-title"></h2>
         <p class="episode-code"></p>
+        <img class="episode-img" src="" alt="Episode image" />
+
         <div class="episode-summary"></div>
       </div>
     </template>
 
     <div id="root"></div>
     <div id="episode-list"></div>
+
+    <p>
+      Data from <a href="https://www.tvmaze.com/" target="_blank">TVMaze.com</a>
+    </p>
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
