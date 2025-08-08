@@ -1,6 +1,7 @@
 //You can edit ALL of the code here
+let allEpisodes = []
 function setup() {
-  const allEpisodes = getAllEpisodes();
+  allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 }
 
@@ -32,9 +33,16 @@ function makePageForEpisodes(episodeList) {
   });
 }
 
+function render(){
+  const filteredEpisodes = allEpisodes.filter(function (episode){
+    return episode.name.toLowerCase().includes(input.value.toLowerCase());
+  })
+  makePageForEpisodes(filteredEpisodes);
+}
+
 const input = document.querySelector("input")
    input.addEventListener("keyup", function(){
-    // console.log(input.value)
+    render()
   })
 
 window.onload = setup;
