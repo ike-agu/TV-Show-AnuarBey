@@ -32,4 +32,9 @@ function makePageForEpisodes(episodeList) {
   });
 }
 
+const input = document.querySelector("input")
+   input.addEventListener("keyup", function(){
+    // console.log(input.value)
+  })
+
 window.onload = setup;
