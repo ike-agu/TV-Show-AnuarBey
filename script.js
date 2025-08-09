@@ -3,7 +3,6 @@ let allEpisodes = []; // store all episodes globally so that other functions can
 function setup() {
   allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
-  console.log(allEpisodes);
 }
 
 function makePageForEpisodes(episodeList) {
@@ -25,11 +24,10 @@ function makePageForEpisodes(episodeList) {
 
   episodeList.forEach((episode) => {
     const episodeCard = template.content.cloneNode(true);
-    const codeAndSeason = `S${String(episode.season).padStart(2, "0")}E${String(
-      episode.number
-    ).padStart(2, "0")}`;
-    console.log(codeAndSeason);
-    episode.id = codeAndSeason;
+
+    const codeAndSeason = `S${String(episode.season).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
+
+     episodeCard.querySelector(".episode-card").id = codeAndSeason;
     episodeCard.querySelector(".episode-title").textContent = episode.name;
     episodeCard.querySelector(".episode-code").textContent = codeAndSeason;
     episodeCard.querySelector(".episode-summary").innerHTML = episode.summary;
@@ -39,16 +37,28 @@ function makePageForEpisodes(episodeList) {
 
   //query the selector select
   const selectEpisodeList = document.querySelector("select");
-
+   selectEpisodeList.innerHTML = "";
   //Create and append the select option
   for (let i = 0; i < allEpisodes.length; i++) {
-    const episodeCodeAndSeason = `S${String(allEpisodes[i].season).padStart(2,"0"}E${String(allEpisodes[i].number).padStart(2, "0")}`;
+    const episodeCodeAndSeason = `S${String(allEpisodes[i].season).padStart(2,"0")}E${String(allEpisodes[i].number).padStart(2, "0")}`;
     const option = document.createElement("option");
-    option.setAttribute("value", allEpisodes[i].name);
+    option.setAttribute("value", episodeCodeAndSeason);
     option.text = `${episodeCodeAndSeason} - ${allEpisodes[i].name}`;
     selectEpisodeList.appendChild(option);
   }
+
+  selectEpisodeList.addEventListener("change", function(){
+    const allEpisodeCode = this.value;
+    if(allEpisodeCode === "all"){
+        makePageForEpisodes(allEpisodes);
+    }else{
+      const card = document.getElementById(allEpisodeCode);
+      if (card) card.scrollIntoView({ behavior: "smooth" });
+    }
+  })
+
 }
+
 //filters episodes based on user search and re-render the page.
 function render() {
   const filteredEpisodes = allEpisodes.filter(function (episode) {
