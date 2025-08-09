@@ -27,7 +27,7 @@ function makePageForEpisodes(episodeList) {
 
     const codeAndSeason = `S${String(episode.season).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
 
-     episodeCard.querySelector(".episode-card").id = codeAndSeason;
+    episodeCard.querySelector(".episode-card").id = codeAndSeason;
     episodeCard.querySelector(".episode-title").textContent = episode.name;
     episodeCard.querySelector(".episode-code").textContent = codeAndSeason;
     episodeCard.querySelector(".episode-summary").innerHTML = episode.summary;
@@ -37,8 +37,15 @@ function makePageForEpisodes(episodeList) {
 
   //query the selector select
   const selectEpisodeList = document.querySelector("select");
-   selectEpisodeList.innerHTML = "";
-  //Create and append the select option
+  selectEpisodeList.innerHTML = "";
+
+  // default first option on select drop-down list
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "allEpisodes"; //
+  defaultOption.text = "--- Show all episodes ---";
+  selectEpisodeList.appendChild(defaultOption);
+
+  //Create episode option and set its value
   for (let i = 0; i < allEpisodes.length; i++) {
     const episodeCodeAndSeason = `S${String(allEpisodes[i].season).padStart(2,"0")}E${String(allEpisodes[i].number).padStart(2, "0")}`;
     const option = document.createElement("option");
@@ -46,17 +53,25 @@ function makePageForEpisodes(episodeList) {
     option.text = `${episodeCodeAndSeason} - ${allEpisodes[i].name}`;
     selectEpisodeList.appendChild(option);
   }
-
-  selectEpisodeList.addEventListener("change", function(){
+  
+  //this handles episode selection
+  selectEpisodeList.addEventListener("change", function () {
     const allEpisodeCode = this.value;
-    if(allEpisodeCode === "all"){
-        makePageForEpisodes(allEpisodes);
-    }else{
-      const card = document.getElementById(allEpisodeCode);
-      if (card) card.scrollIntoView({ behavior: "smooth" });
-    }
-  })
+    const cards = document.querySelectorAll(".episode-card");
 
+    //This is to remove any existing highlight from the card
+    cards.forEach((card) => card.classList.remove("selected-episode"));
+
+    if (allEpisodeCode === "allEpisodes") {
+      window.scrollTo({ top: 0, behavior: "smooth" }); // scrolls the page smoothly to the top
+    } else {
+      const card = document.getElementById(allEpisodeCode);
+      if (card) {
+        card.scrollIntoView({ behavior: "smooth" });
+        card.classList.add("selected-episode");
+      }
+    }
+  });
 }
 
 //filters episodes based on user search and re-render the page.
