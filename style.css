@@ -136,7 +136,7 @@ a:hover {
   box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.5);
   z-index: 100;
 }
-
+/* drop down search */
 #drop-down-search{
   width: 15%;
   font-size: 0.9rem;
@@ -148,4 +148,16 @@ a:hover {
   background: #e50914;
   transition: background 0.4s ease-in-out, transform 0.3s ease;
   transform: scale(1.05);
+}
+
+
+.header-search{
+  display: flex;
+  gap: 3rem;
+  margin-top: 30px;
+}
+
+#search{
+padding: 7px;
+
 }
