@@ -3,6 +3,7 @@ let allEpisodes = []; // store all episodes globally so that other functions can
 function setup() {
   allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
+  console.log(allEpisodes);
 }
 
 function makePageForEpisodes(episodeList) {
@@ -14,7 +15,7 @@ function makePageForEpisodes(episodeList) {
   header.textContent = `Got ${episodeList.length} episode(s)`;
   rootElem.appendChild(header);
 
-//create div to hold all episode cards
+  //create div to hold all episode cards
   const episodeListElem = document.createElement("div");
   episodeListElem.id = "episode-list";
   rootElem.appendChild(episodeListElem);
@@ -24,13 +25,29 @@ function makePageForEpisodes(episodeList) {
 
   episodeList.forEach((episode) => {
     const episodeCard = template.content.cloneNode(true);
-
+    const codeAndSeason = `S${String(episode.season).padStart(2, "0")}E${String(
+      episode.number
+    ).padStart(2, "0")}`;
+    console.log(codeAndSeason);
+    episode.id = codeAndSeason;
     episodeCard.querySelector(".episode-title").textContent = episode.name;
-    episodeCard.querySelector(".episode-code").textContent = `S${String(episode.season).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
+    episodeCard.querySelector(".episode-code").textContent = codeAndSeason;
     episodeCard.querySelector(".episode-summary").innerHTML = episode.summary;
     episodeCard.querySelector(".episode-img").src = episode.image.medium;
     episodeListElem.appendChild(episodeCard);
   });
+
+  //query the selector select
+  const selectEpisodeList = document.querySelector("select");
+
+  //Create and append the select option
+  for (let i = 0; i < allEpisodes.length; i++) {
+    const episodeCodeAndSeason = `S${String(allEpisodes[i].season).padStart(2,"0"}E${String(allEpisodes[i].number).padStart(2, "0")}`;
+    const option = document.createElement("option");
+    option.setAttribute("value", allEpisodes[i].name);
+    option.text = `${episodeCodeAndSeason} - ${allEpisodes[i].name}`;
+    selectEpisodeList.appendChild(option);
+  }
 }
 //filters episodes based on user search and re-render the page.
 function render() {
